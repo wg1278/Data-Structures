@@ -53,6 +53,32 @@ public class Stack<T extends Comparable<T>> {
 		return tmp;
 	}
 	
+	public void sort(){
+		Stack<T> tmp = new Stack<T>();
+		T var;
+		
+		if(!isEmpty())
+			tmp.push(pop());
+		else{
+			System.out.println("Nothing to sort!");
+			return;
+		}
+		
+		while(!isEmpty()){
+			if(tmp.peek().compareTo(peek()) < 0)
+				tmp.push(pop());
+			else{
+				var = pop();
+				while(!tmp.isEmpty() && tmp.peek().compareTo(var) > 0)
+					push(tmp.pop());
+				tmp.push(var);
+			}
+		}
+		
+		while(!tmp.isEmpty())
+			push(tmp.pop());
+	}
+	
 	public void clear(){
 		size = 0;
 		top = null;
@@ -74,10 +100,12 @@ public class Stack<T extends Comparable<T>> {
 	}
 	
 	public static void main(String[] args){
+		int[] vals = {4, 6, 0, 1, 7, 3, 8, 2, 9, 5};
 		Stack<Integer> s = new Stack<Integer>();
-		s.push(1);
-		s.push(2);
-		s.push(3);
+		for(int val : vals)
+			s.push(val);
+		System.out.println(s.toString());
+		s.sort();
 		System.out.println(s.toString());
 	}
 }
